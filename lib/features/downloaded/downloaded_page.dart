@@ -15,6 +15,7 @@ class _DownloadedPageState extends State<DownloadedPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.black,
+
       appBar: AppBar(
         backgroundColor: AppColors.black,
         title: const CustomBoldText(
