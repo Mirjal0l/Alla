@@ -1,4 +1,4 @@
-
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:alla/core/utils/app_colors.dart';
@@ -7,10 +7,11 @@ import 'package:alla/router/name_routes.dart';
 import 'package:alla/widgets/custom_bold_text.dart';
 import 'package:alla/widgets/custom_sub_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'presentation/widgets/custom_blue_button.dart';
+import '../../widgets/custom_blue_button.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class Onboarding extends StatefulWidget {
@@ -20,49 +21,73 @@ class Onboarding extends StatefulWidget {
 }
 
 class _OnboardingState extends State<Onboarding> {
+  Timer? _timer;
 
-  late final PageController _pageController; // controller for managing swiping pages
+  late final PageController
+  _pageController; // controller for managing swiping pages
   int _currentPage = 0;
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController(); // initialize controller together
+    _autoPlay(); // for swiping pages automatically
   }
 
   @override
   void dispose() {
     super.dispose();
     _pageController.dispose(); // always dispose controller
+    _timer?.cancel();
+  }
+
+  // auto swiping after 3 seconds
+  void _autoPlay() {
+    _timer = Timer.periodic(Duration(seconds: 3), (timer) {
+      if (_currentPage < pages.length - 1) {
+        _currentPage++;
+      } else {
+        _currentPage = 0;
+      }
+
+      _pageController.animateToPage(
+        _currentPage,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    });
   }
 
   // list of pages
   final List<Map<String, String>> pages = [
     {
       "title": "Bolalar uchun xavfsiz kontent",
-      "subtitle": "Sizning farzandingiz uchun faqat xavfsiz va foydali kontent.",
-      "image": "assets/images/img1.png"
+      "subtitle":
+      "Sizning farzandingiz uchun faqat xavfsiz va foydali kontent.",
+      "image": "assets/images/img1.png",
     },
 
     {
       "title": "Bolalar uchun xavfsiz kontent",
-      "subtitle": "Sizning farzandingiz uchun faqat xavfsiz va foydali kontent.",
-      "image": "assets/images/img2.png"
+      "subtitle":
+      "Sizning farzandingiz uchun faqat xavfsiz va foydali kontent.",
+      "image": "assets/images/img2.png",
     },
 
     {
       "title": "Bolalar uchun xavfsiz kontent",
-      "subtitle": "Sizning farzandingiz uchun faqat xavfsiz va foydali kontent.",
-      "image": "assets/images/img3.png"
+      "subtitle":
+      "Sizning farzandingiz uchun faqat xavfsiz va foydali kontent.",
+      "image": "assets/images/img3.png",
     },
 
     {
       "title": "Sifatli ta’limiy va qiziqarli videolar",
-      "subtitle": "O‘yinlar, ertaklar, qo‘shiqlar va foydali bilimlar bir joyda.",
-      "image": "assets/images/img4.png"
-    }
+      "subtitle":
+      "O‘yinlar, ertaklar, qo‘shiqlar va foydali bilimlar bir joyda.",
+      "image": "assets/images/img4.png",
+    },
   ];
-
 
   @override
   Widget build(BuildContext context) {
@@ -76,12 +101,9 @@ class _OnboardingState extends State<Onboarding> {
         decoration: BoxDecoration(
           gradient: RadialGradient(
             center: Alignment.bottomRight,
-            colors: [
-              AppColors.reddish,
-              AppColors.black,
-            ],
+            colors: [AppColors.reddish, AppColors.black],
             radius: 1.5,
-            stops: [0.0, 0.5]
+            stops: [0.0, 0.5],
           ),
         ),
         child: SafeArea(
@@ -96,6 +118,7 @@ class _OnboardingState extends State<Onboarding> {
 
               // pageview (swipable screens)
               PageView.builder(
+                scrollDirection: Axis.horizontal,
                 itemCount: pages.length,
                 controller: _pageController,
                 onPageChanged: (index) {
@@ -103,14 +126,15 @@ class _OnboardingState extends State<Onboarding> {
                     _currentPage = index;
                   });
                 },
-                itemBuilder: (context, index) { // building each screen
+                itemBuilder: (context, index) {
+                  // building each screen
                   final page = pages[index];
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Image.asset(
-                          page["image"]!,
+                        page["image"]!,
                         width: 276,
                         height: 276,
                         fit: BoxFit.contain,
@@ -118,20 +142,14 @@ class _OnboardingState extends State<Onboarding> {
 
                       const SizedBox(height: 20),
 
-                      CustomBoldText(
-                          text: page["title"]!,
-                          size: 28
-                      ),
+                      CustomBoldText(text: page["title"]!, size: 28),
 
                       const SizedBox(height: 10),
 
-                      CustomSubText(
-                          text: page["subtitle"]!,
-                          size: 17
-                      ),
+                      CustomSubText(text: page["subtitle"]!, size: 17),
 
-                      const SizedBox(height: 20)
-                    ]
+                      const SizedBox(height: 20),
+                    ],
                   );
                 },
               ),
@@ -140,15 +158,30 @@ class _OnboardingState extends State<Onboarding> {
               Positioned(
                 top: 16,
                 right: 0,
-                child: CustomGrayButton(title: "O'tkazish", onPressed: (){
-                  if (_currentPage != pages.length - 1) {
+                child: CustomGrayButton(
+                  title: "O'tkazish",
+                  onPressed: () {
+                    // if (_currentPage != pages.length - 1) {
+                    //   _pageController.animateToPage(
+                    //     _currentPage, // last page
+                    //     duration: Duration(milliseconds: 300),
+                    //     curve: Curves.easeInOut,
+                    //   );
+                    // }
+
+                    if (_currentPage < pages.length - 1) {
+                      _currentPage++;
+                    } else {
+                      _currentPage = 0;
+                    }
+
                     _pageController.animateToPage(
-                        pages.length - 1, // last page
+                        _currentPage,
                         duration: Duration(milliseconds: 300),
                         curve: Curves.easeInOut
                     );
-                  }
-                })
+                  },
+                ),
               ),
 
               // dots
@@ -159,31 +192,37 @@ class _OnboardingState extends State<Onboarding> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: List.generate(
-                      pages.length,
-                      (index) => AnimatedContainer(
-                        duration: const Duration(milliseconds: 300),
-                        margin: EdgeInsets.symmetric(horizontal: 5),
-                        width: 8,
-                        height: 8,
-                        decoration: BoxDecoration(
-                          color: _currentPage == index ? AppColors.white : AppColors.white.withOpacity(0.3),
-                          borderRadius: BorderRadius.circular(50)
+                    pages.length,
+                        (index) =>
+                        AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          width: 8,
+                          height: 8,
+                          decoration: BoxDecoration(
+                            color: _currentPage == index
+                                ? AppColors.white
+                                : AppColors.white.withOpacity(0.3),
+                            borderRadius: BorderRadius.circular(50),
+                          ),
                         ),
-                      )
-                  )
+                  ),
                 ),
-              )
+              ),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: Container( // start button
+      bottomNavigationBar: Container(
+        // start button
         padding: EdgeInsets.only(bottom: 30, left: 16, right: 16),
-        child: CustomBlueButton(title: "Boshlash", onPressed: (){
-          context.push(Routes.home);
-        }),
+        child: CustomBlueButton(
+          title: "Boshlash",
+          onPressed: () {
+            context.push(Routes.login);
+          },
+        ),
       ),
     );
   }
 }
-

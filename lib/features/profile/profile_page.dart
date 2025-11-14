@@ -2,6 +2,7 @@ import 'package:alla/core/utils/app_colors.dart';
 import 'package:alla/features/profile/presentation/widgets/custom_field.dart';
 import 'package:alla/widgets/custom_bold_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -12,6 +13,20 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // 👇 Make navigation bar transparent & icons light
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      systemNavigationBarColor: Colors.transparent,
+      systemNavigationBarDividerColor: Colors.transparent,
+      systemNavigationBarIconBrightness: Brightness.light,
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.light,
+    ));
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +91,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   bottom: 0,
                   right: 0,
                   child: Image.asset(
-                      'assets/images/img16.png',
+                    'assets/images/img16.png',
                     width: 36,
                     height: 36,
                   ),
@@ -99,8 +114,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
                 },
                 child: CustomBoldText(
-                    text: 'Akkountdan chiqish',
-                    size: 17,
+                  text: 'Akkountdan chiqish',
+                  size: 17,
                   fontWeight: FontWeight.w700,
                   color: AppColors.blue,
                 )

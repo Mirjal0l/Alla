@@ -1,4 +1,6 @@
 import 'package:alla/core/utils/app_colors.dart';
+import 'package:alla/features/home/data/home_data.dart';
+import 'package:alla/features/home/presentation/pages/home_page_content.dart';
 import 'package:alla/widgets/custom_bold_text.dart';
 import 'package:alla/widgets/custom_sub_text.dart';
 import 'package:flutter/material.dart';
@@ -11,55 +13,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   // listview contents
-  final List<Map<String, String>> items = [
-    {
-      "image": "assets/images/img5.png",
-      "text": "Allalar",
-      "subtext": "O‘zbek hududlariga xos milliy allalarni tinglang",
-    },
 
-    {
-      "image": "assets/images/img6.png",
-      "text": "Milliy Multfilmlar",
-      "subtext": "Milliy multfilmlar va animatsion kliplar",
-    },
-
-    {
-      "image": "assets/images/img7.png",
-      "text": "Filmlar & Seriallar",
-      "subtext": "Bolalar uchun badiiy filmlar va seriallar",
-    },
-
-    {
-      "image": "assets/images/img8.png",
-      "text": "Ta’limiy Kontent",
-      "subtext": "Ta’limiy kontentlar va raqamli kutubxona",
-    },
-
-    {
-      "image": "assets/images/img9.png",
-      "text": "Xorijiy Multfilmlar",
-      "subtext": "Tarjima qilingan xorijiy multfilmlar",
-    },
-
-    {
-      "image": "assets/images/img10.png",
-      "text": "Qo‘shiqlar & Raqslar",
-      "subtext": "Bolalar uchun quvnoq qo‘shiqlar va raqslar",
-    },
-
-    {
-      "image": "assets/images/img11.png",
-      "text": "Sog‘lom Turmush",
-      "subtext": "Sog‘lom turmush tarzini targ‘ib etuvchi loyihalar",
-    },
-
-    {
-      "image": "assets/images/img12.png",
-      "text": "O’yinlar",
-      "subtext": "Qiziqarli va xavfsiz o‘yinlar bolalar uchun",
-    },
-  ];
   dynamic selectedValue = 18; // for dropdown button
 
   @override
@@ -180,7 +134,7 @@ class _HomePageState extends State<HomePage> {
                       // listview itself
                       Expanded(
                         child: ListView.builder(
-                          itemCount: items.length,
+                          itemCount: HomeData.items.length,
                           itemBuilder: (context, index) {
                             return Container(
                               width: double.infinity,
@@ -208,7 +162,7 @@ class _HomePageState extends State<HomePage> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     SizedBox(
@@ -219,7 +173,7 @@ class _HomePageState extends State<HomePage> {
                                           20,
                                         ),
                                         child: Image.asset(
-                                          items[index]['image']!,
+                                          HomeData.items[index]['image']!,
                                           // width: 100,
                                           // height: 80,
                                           fit: BoxFit.cover,
@@ -232,18 +186,18 @@ class _HomePageState extends State<HomePage> {
                                     Expanded(
                                       child: Column(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
+                                        MainAxisAlignment.spaceEvenly,
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                         children: [
                                           CustomBoldText(
-                                            text: items[index]['text']!,
+                                            text: HomeData.items[index]['text']!,
                                             size: 17,
                                             textAlign: TextAlign.start,
                                           ),
 
                                           CustomSubText(
-                                            text: items[index]['subtext']!,
+                                            text: HomeData.items[index]['subtext']!,
                                             size: 14,
                                             textAlign: TextAlign.start,
                                           ),
@@ -251,30 +205,39 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     ),
 
-                                    Stack(
-                                      children: [
-                                        IconButton(
-                                          onPressed: () {},
-                                          icon: Image.asset(
-                                            'assets/images/img14.png',
-                                            width: 30,
-                                            height: 30,
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (builder) => HomePageContent(index: index)
+                                            )
+                                        );
+                                      },
+                                      child: Stack(
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.bottomRight,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(right: 4, bottom: 4),
+                                              child: Image.asset(
+                                                  'assets/images/img14.png',
+                                                  width: 30,
+                                                  height: 30,
+                                                ),
+                                            ),
                                           ),
-                                          padding: EdgeInsets.zero,
-                                        ),
 
-                                        Positioned(
-                                          top: 0,
-                                          bottom: 0,
-                                          right: 0,
-                                          left: 0,
-                                          child: Icon(
-                                            Icons.keyboard_arrow_right,
-                                            color: AppColors.white,
-                                            size: 24,
+                                          Positioned(
+                                            bottom: 6,
+                                            right: 6,
+                                            child: Icon(
+                                              Icons.keyboard_arrow_right,
+                                              color: AppColors.white,
+                                              size: 24,
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),

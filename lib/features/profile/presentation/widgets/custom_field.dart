@@ -18,17 +18,46 @@ class CustomField extends StatefulWidget {
 
 class _CustomFieldState extends State<CustomField> {
   late TextEditingController _controller;
+  late FocusNode _focusNode; // for edit icon
+  bool _isFocused = false;
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController(text: widget.hint);
+    _focusNode = FocusNode();
+
+    _focusNode.addListener(
+        (){
+          // when focus is lost, this will make it non-editable again
+          if (!_focusNode.hasFocus) {
+            setState(() {
+              _isFocused = false;
+            });
+          }  
+        }
+    );
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _focusNode.dispose();
     super.dispose();
+  }
+
+  void _enableEditing() {
+    setState(() {
+      _isFocused = true;
+    });
+
+    // Request a focus after tiny delay for making sure set state updated
+
+    Future.delayed(
+      Duration.zero, (){
+        _focusNode.requestFocus(); // requesting focus
+      }
+    );
   }
 
   @override
@@ -65,6 +94,10 @@ class _CustomFieldState extends State<CustomField> {
                   ),
                   child: TextField(
                     controller: _controller,
+                    focusNode: _focusNode,
+                    readOnly: !_isFocused,
+                    enabled: true, // always unabled to receive focus
+                    showCursor: _isFocused,// show cursor only when editable,
                     style: const TextStyle(
                       color: AppColors.white,
                     ),
@@ -75,12 +108,17 @@ class _CustomFieldState extends State<CustomField> {
                       ),
                       border: InputBorder.none,
                       contentPadding: const EdgeInsets.all(16),
-                      suffixIcon: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: SvgPicture.asset(
-                          'assets/icons/edit.svg',
-                          width: 24,
-                          height: 24,
+                      suffixIcon: GestureDetector(
+                        onTap: (){
+                          _enableEditing();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: SvgPicture.asset(
+                            'assets/icons/edit.svg',
+                            width: 24,
+                            height: 24,
+                          ),
                         ),
                       ),
                     ),

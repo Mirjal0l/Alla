@@ -6,11 +6,15 @@ class CustomSubText extends StatelessWidget {
   final String text;
   final double size;
   final TextAlign textAlign;
+  final FontWeight fontWeight;
+  final Color color;
   const CustomSubText({
     super.key,
     required this.text,
     required this.size,
-    this.textAlign = TextAlign.center
+    this.textAlign = TextAlign.center,
+    this.fontWeight = FontWeight.w500,
+    this.color = AppColors.white08
   });
 
   @override
@@ -19,9 +23,9 @@ class CustomSubText extends StatelessWidget {
       text,
       style: GoogleFonts.nunito(
         fontSize: size,
-        fontWeight: FontWeight.w500,
+        fontWeight: fontWeight,
         fontStyle: FontStyle.normal,
-        color: AppColors.white.withOpacity(0.8),
+        color: color,
         letterSpacing: 0,
       ),
       textAlign: textAlign,

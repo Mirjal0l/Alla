@@ -12,6 +12,12 @@ class AppColors{
   static const black2 = Color(0xFF1C1C1E);
   static const brown = Color(0xFF412E22);
   static const gray_darker2 = Color(0xFF252527);
+  static const gray_darker3 = Color(0xFF13161C);
   static const dark_brown = Color(0xFF26171B);
   static const green = Color(0xFF04B55F);
+  static const green2 = Color(0xFF1EB53A);
+  static const dark_reddish = Color(0xFF5A0207);
+  static const error = Color(0xFFDA1E28);
+  static const white08 = Color(0xFFF8F8F8);
+
 }

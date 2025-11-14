@@ -8,4 +8,7 @@ sealed class Routes {
   static const String home = '/home';
   static const String downloaded = '/downloaded';
   static const String profile = '/profile';
+  static const String login = '/login';
+  static const String info = '/info';
+  static const String otp_page = '/otp/:phone';
 }
