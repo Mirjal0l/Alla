@@ -23,6 +23,7 @@ class _DownloadedPageState extends State<DownloadedPage> {
       'image': 'assets/images/img01.png',
     },
 
+
     {
       'title': 'Buxoro allasi',
       'pages': '10 bet',
