@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:alla/core/utils/app_colors.dart';
+import 'package:alla/core/utils/utils.dart';
 import 'package:alla/features/onboarding/presentation/widgets/custom_gray_button.dart';
 import 'package:alla/router/name_routes.dart';
 import 'package:alla/widgets/custom_bold_text.dart';
@@ -26,37 +27,6 @@ class _OnboardingState extends State<Onboarding> {
   late final PageController
   _pageController; // controller for managing swiping pages
   int _currentPage = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController(); // initialize controller together
-    _autoPlay(); // for swiping pages automatically
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _pageController.dispose(); // always dispose controller
-    _timer?.cancel();
-  }
-
-  // auto swiping after 3 seconds
-  void _autoPlay() {
-    _timer = Timer.periodic(Duration(seconds: 3), (timer) {
-      if (_currentPage < pages.length - 1) {
-        _currentPage++;
-      } else {
-        _currentPage = 0;
-      }
-
-      _pageController.animateToPage(
-        _currentPage,
-        duration: Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    });
-  }
 
   // list of pages
   final List<Map<String, String>> pages = [
@@ -90,12 +60,50 @@ class _OnboardingState extends State<Onboarding> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(); // initialize controller together
+    _autoPlay(); // for swiping pages automatically
+  }
+
+
+  // auto swiping after 3 seconds
+  void _autoPlay() {
+    _timer = Timer.periodic(Duration(seconds: 3), (timer) {
+      //Safety check
+      if (!_pageController.hasClients) {
+        _timer?.cancel();
+        return;
+      }
+
+      if (_currentPage < pages.length - 1) {
+        _currentPage++;
+      } else {
+        _currentPage = 0;
+      }
+
+      _pageController.animateToPage(
+        _currentPage,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    });
+  }
+  @override
+  void dispose() {
+    super.dispose();
+    _pageController.dispose(); // always dispose controller
+    _timer?.cancel();
+  }
+
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
 
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: AppUtils.kPaddingHor16,
 
         // background gradient
         decoration: BoxDecoration(
@@ -140,15 +148,15 @@ class _OnboardingState extends State<Onboarding> {
                         fit: BoxFit.contain,
                       ),
 
-                      const SizedBox(height: 20),
+                      AppUtils.kGap20,
 
                       CustomBoldText(text: page["title"]!, size: 28),
 
-                      const SizedBox(height: 10),
+                      AppUtils.kGap10,
 
                       CustomSubText(text: page["subtitle"]!, size: 17),
 
-                      const SizedBox(height: 20),
+                      AppUtils.kGap20,
                     ],
                   );
                 },
@@ -196,14 +204,14 @@ class _OnboardingState extends State<Onboarding> {
                         (index) =>
                         AnimatedContainer(
                           duration: const Duration(milliseconds: 300),
-                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          margin: AppUtils.kPaddingHor5,
                           width: 8,
                           height: 8,
                           decoration: BoxDecoration(
                             color: _currentPage == index
                                 ? AppColors.white
                                 : AppColors.white.withOpacity(0.3),
-                            borderRadius: BorderRadius.circular(50),
+                            borderRadius: AppUtils.kBorderRadius50,
                           ),
                         ),
                   ),
@@ -215,11 +223,12 @@ class _OnboardingState extends State<Onboarding> {
       ),
       bottomNavigationBar: Container(
         // start button
-        padding: EdgeInsets.only(bottom: 30, left: 16, right: 16),
+        padding: AppUtils.kPaddingBottom30Left16Right16,
         child: CustomBlueButton(
           title: "Boshlash",
           onPressed: () {
-            context.push(Routes.login);
+            // context.push(Routes.login); change after test
+            context.push(Routes.newHomePage);
           },
         ),
       ),

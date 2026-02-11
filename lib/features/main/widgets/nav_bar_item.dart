@@ -1,4 +1,5 @@
 import 'package:alla/core/utils/app_colors.dart';
+import 'package:alla/core/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -29,12 +30,12 @@ class _NavBarItemState extends State<NavBarItem> {
   Widget build(BuildContext context) {
     late final bool isSelected = widget.navigationShell.currentIndex == widget.index;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      padding: AppUtils.kPaddingHor4,
       child: InkWell(
         onTap: widget.onPressed,
         child: SizedBox(
           height: 56,
-          width: 80,
+          // width: 80,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -43,7 +44,7 @@ class _NavBarItemState extends State<NavBarItem> {
                   widget.icon,
                   height: 24,
                   width: 24,
-                  colorFilter: ColorFilter.mode(isSelected ? AppColors.blue : AppColors.gray, BlendMode.srcIn)
+                  colorFilter: ColorFilter.mode(isSelected ? AppColors.white : AppColors.white.withOpacity(0.3), BlendMode.srcIn)
               ),
 
               Text(
@@ -51,8 +52,10 @@ class _NavBarItemState extends State<NavBarItem> {
                 style: GoogleFonts.nunito(
                   fontSize: 12,
                   fontWeight: FontWeight.w700,
-                  color: isSelected ? AppColors.blue : AppColors.gray,
+                  color: isSelected ? AppColors.white : AppColors.white.withOpacity(0.3),
                 ),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
               )
             ],
           ),

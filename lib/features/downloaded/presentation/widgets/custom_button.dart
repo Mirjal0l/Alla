@@ -1,3 +1,4 @@
+import 'package:alla/core/utils/utils.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../widgets/custom_bold_text.dart';
@@ -26,10 +27,10 @@ class CustomButton extends StatelessWidget {
             image: AssetImage('assets/images/img17.png'),
             fit: BoxFit.fill,
           ),
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
+          borderRadius: AppUtils.kBorderRadius12,
         )
             : BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
+          borderRadius: AppUtils.kBorderRadius12,
           color: AppColors.gray_darker2,
         ),
         child: Center(

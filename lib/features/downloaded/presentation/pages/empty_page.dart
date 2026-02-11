@@ -1,3 +1,4 @@
+import 'package:alla/core/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/utils/app_colors.dart';
@@ -28,12 +29,9 @@ class _EmptyPageState extends State<EmptyPage> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        margin: EdgeInsets.only(top: 16),
+        margin: AppUtils.kPaddingTop16,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-                topRight: Radius.circular(28),
-                topLeft: Radius.circular(28)
-            ),
+            borderRadius: AppUtils.kBorderRadiusTop28,
             gradient: LinearGradient(
                 colors: [
                   AppColors.black,
@@ -53,7 +51,7 @@ class _EmptyPageState extends State<EmptyPage> {
                 textAlign: TextAlign.center,
               ),
 
-              SizedBox(height: 4),
+              AppUtils.kGap4,
 
               CustomSubText(
                 text: 'Siz hali media fayl yuklamagansiz. Bu yerda yuklangan fayllaringiz aks etadi.',

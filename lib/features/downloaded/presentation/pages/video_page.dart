@@ -1,4 +1,5 @@
 import 'package:alla/core/utils/app_colors.dart';
+import 'package:alla/widgets/custom_app_bar.dart';
 import 'package:alla/widgets/custom_bold_text.dart';
 import 'package:flutter/material.dart';
 
@@ -14,11 +15,10 @@ class _VideoPageState extends State<VideoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.gray_darker2,
-      appBar: AppBar(
-        backgroundColor: AppColors.gray_darker2,
-        title: const CustomBoldText(text: 'Video Page', size: 20,),
-        centerTitle: true,
-      ),
+      appBar: CustomAppBar(
+          hasLeadingIcon: true,
+        title: 'Video page',
+      )
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:alla/core/utils/app_colors.dart';
+import 'package:alla/core/utils/utils.dart';
 import 'package:alla/widgets/custom_sub_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,7 +23,7 @@ class CustomGrayButton extends StatelessWidget {
         height: 28,
         decoration: BoxDecoration(
           color: AppColors.gray_darker,
-          borderRadius: BorderRadius.circular(40)
+          borderRadius: AppUtils.kBorderRadius40,
         ),
 
         child: Center(

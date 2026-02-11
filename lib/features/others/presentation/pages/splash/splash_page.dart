@@ -1,10 +1,17 @@
+
+
 import 'dart:math' as math;
 
 import 'package:alla/core/utils/app_colors.dart';
+import 'package:alla/core/utils/utils.dart';
+import 'package:alla/router/app_routes.dart';
 import 'package:alla/router/name_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:alla/widgets/gradient_progress_painter.dart';
 import 'package:go_router/go_router.dart';
+
+part 'mixins/splash_mixin.dart';
+
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -52,7 +59,7 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
           ),
 
           Padding(
-            padding: EdgeInsets.only(bottom: 40),
+            padding: AppUtils.kPaddingBottom40,
             child: Align(
               alignment: Alignment.bottomCenter,
               child: AnimatedBuilder(

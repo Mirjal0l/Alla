@@ -8,13 +8,15 @@ class CustomBoldText extends StatelessWidget {
   final TextAlign textAlign;
   final FontWeight fontWeight;
   final Color color;
+  final int maxLines;
   const CustomBoldText({
     super.key,
     required this.text,
     required this.size,
     this.textAlign = TextAlign.center,
     this.fontWeight = FontWeight.w900,
-    this.color = AppColors.white
+    this.color = AppColors.white,
+    this.maxLines = 2,
   });
 
   @override
@@ -26,8 +28,11 @@ class CustomBoldText extends StatelessWidget {
         fontSize: size,
         fontStyle: FontStyle.normal,
         color: color,
-        letterSpacing: 0
+        letterSpacing: 0,
+        height: 0
       ),
+      maxLines: maxLines,
+      overflow: TextOverflow.ellipsis,
       textAlign: textAlign,
     );
   }

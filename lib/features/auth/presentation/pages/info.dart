@@ -1,4 +1,5 @@
 import 'package:alla/core/utils/app_colors.dart';
+import 'package:alla/widgets/custom_app_bar.dart';
 import 'package:alla/widgets/custom_bold_text.dart';
 import 'package:flutter/material.dart';
 
@@ -14,10 +15,10 @@ class _InfoState extends State<Info> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.black2,
-      appBar: AppBar(
-        title: CustomBoldText(text: 'Info', size: 20),
-        centerTitle: true,
-      ),
+      appBar: CustomAppBar(
+          hasLeadingIcon: true,
+        title: 'Info',
+      )
     );
   }
 }
