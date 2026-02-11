@@ -14,7 +14,7 @@ class CustomSubText extends StatelessWidget {
     required this.size,
     this.textAlign = TextAlign.center,
     this.fontWeight = FontWeight.w500,
-    this.color = AppColors.white08
+    this.color = AppColors.white08,
   });
 
   @override

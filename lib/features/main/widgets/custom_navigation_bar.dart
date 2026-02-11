@@ -1,4 +1,5 @@
 import 'package:alla/core/utils/app_colors.dart';
+import 'package:alla/core/utils/utils.dart';
 import 'package:alla/features/main/widgets/nav_bar_item.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -42,7 +43,7 @@ class CustomNavigationBar extends StatelessWidget {
 
     return Container(
       color: AppColors.black2,
-      padding: EdgeInsets.only(top: 8),
+      padding: AppUtils.kPaddingTop8,
       width: double.infinity,
       height: 56,
       child: Row(

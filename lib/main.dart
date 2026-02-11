@@ -1,11 +1,16 @@
+import 'package:alla/api/repository_impl.dart';
+import 'package:alla/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:alla/injector_container.dart';
 import 'package:alla/router/app_routes.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Initializes plugins before runApp()
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge); // Enables edge-to-edge mode
-
+  await init();
   runApp(MyApp());
 }
 
@@ -25,9 +30,18 @@ class _MyAppState extends State<MyApp> {
         systemNavigationBarIconBrightness: Brightness.light,
       ),
     );
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false, // Debug banner false
-      routerConfig: router,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AuthBloc(
+            repository: RepositoryImpl(dio: Dio()),
+          ),
+        )
+      ],
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        routerConfig: router,
+      ),
     );
   }
 }

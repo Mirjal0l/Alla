@@ -1,4 +1,5 @@
 import 'package:alla/features/main/widgets/custom_navigation_bar.dart';
+import 'package:alla/features/main/widgets/new_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -12,7 +13,7 @@ class MainPage extends StatelessWidget {
     return Scaffold(
       body: navigationShell,
       bottomNavigationBar: SafeArea(
-        child: CustomNavigationBar(navigationShell: navigationShell),
+        child: NewNavigationBar(navigationShell: navigationShell),
       ),
     );
   }
